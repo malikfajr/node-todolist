@@ -1,7 +1,7 @@
 FROM node:lts-alpine3.18
 WORKDIR /app
 COPY . .
-RUN npm install
+RUN npm install --production
 
 ENV MYSQL_HOST=127.0.0.1
 ENV MYSQL_PORT=3306
