@@ -1,0 +1,35 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7.24
+    restart: unless-stopped
+    tty: true
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: myapp
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3307:3306"
+    networks:
+      - internal
+
+  app:
+    build: .
+    restart: always
+    environment:
+      MYSQL_HOST: db
+      MYSQL_PORT: 3307
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DBNAME: myapp
+    ports:
+      - "3030:3030"
+    networks:
+      - internal
+    depends_on:
+      - db
+
+networks:
+  internal:
+    driver: bridge
