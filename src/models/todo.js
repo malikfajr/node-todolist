@@ -12,11 +12,20 @@ const Todo = db.define(
     activity_group_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      get() {
+        return `${this.getDataValue('activity_group_id')}`;
+      },
     },
     is_active: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
+      get() {
+        if (this.getDataValue('is_active')) {
+          return '1';
+        }
+        return '0';
+      },
     },
     title: {
       type: DataTypes.STRING,
